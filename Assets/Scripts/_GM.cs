@@ -14,12 +14,18 @@ public class _GM : MonoBehaviour {
 	public GameObject floor;
 	public bool WinGame;
 	public bool GameEnded;
-	public GameObject Player;
-	public GameObject Enemy;
+	private GameObject Player;
+	private GameObject Enemy;
+	
+	AudioSource audio;
+	public AudioClip  blockSound;
+	public AudioClip  soundTrack;
+	public AudioClip  arenaNoise;
 	
 	// Use this for initialization
 	void Start () {
-		
+		audio = GetComponent<AudioSource>();
+		audio.PlayOneShot(soundTrack, 0.7F);
 	}
 	
 	// Update is called once per frame
@@ -42,7 +48,7 @@ public class _GM : MonoBehaviour {
 				GameObject.Destroy(GameObject.Find("Floor ("+floorCount+")"));
 				floorCount ++;
 			}
-			
+				audio.PlayOneShot(blockSound, 0.7F);
 			floorTime = 3f;
 		}
 		
@@ -67,6 +73,7 @@ public class _GM : MonoBehaviour {
 	
 	public void GameOver(){
 		GameEnded = true;
+		audio.PlayOneShot(arenaNoise, 0.7F);
 		if(WinGame){
 			gameText.text = "You Win! Thanks for play. This game is a entry for LD#42 made in 24 hours! Game By @folex70.";
 		}else{

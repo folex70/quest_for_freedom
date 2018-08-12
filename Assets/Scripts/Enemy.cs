@@ -15,6 +15,10 @@ public class Enemy : MonoBehaviour {
 	public float xVal;
 	public GameObject spearPrefab;
 	
+	AudioSource audio;
+	public AudioClip  hitSound;
+	public AudioClip  AttackSound;
+	
 	// Use this for initialization
 	void Start () {
 		enemyTime = 1f;
@@ -22,6 +26,7 @@ public class Enemy : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D>();
 		volta = false;
 		xVal = transform.position.x;
+		audio = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -61,10 +66,14 @@ public class Enemy : MonoBehaviour {
 		}
 		
 		if(RandomAttack == 10){
+			audio.PlayOneShot(AttackSound, 0.7F);
 			Instantiate(spearPrefab, new Vector3(transform.position.x,transform.position.y,0), Quaternion.identity);
 		}
 		
 		if(RandomAttackSpecial == 10){
+			audio.PlayOneShot(AttackSound, 0.7F);
+			audio.PlayOneShot(AttackSound, 0.7F);
+			audio.PlayOneShot(AttackSound, 0.7F);
 			Instantiate(spearPrefab, new Vector3(transform.position.x,transform.position.y,0), Quaternion.identity);
 			Instantiate(spearPrefab, new Vector3(transform.position.x,transform.position.y+1,0), Quaternion.identity);
 			Instantiate(spearPrefab, new Vector3(transform.position.x,transform.position.y-1,0), Quaternion.identity);
@@ -82,6 +91,7 @@ public class Enemy : MonoBehaviour {
 		
 		if(col.gameObject.tag == "spear"){
 			print("hit");
+			audio.PlayOneShot(hitSound, 0.7F);
 			rb.AddForce(Vector2.right * 1000f);
 		}
 		

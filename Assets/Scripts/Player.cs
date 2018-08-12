@@ -13,12 +13,16 @@ public class Player : MonoBehaviour {
 	public GameObject spearPrefab;
 	public GameObject spearPosition;
 	
+	AudioSource audio;
+	public AudioClip  hitSound;
+	public AudioClip  AttackSound;
 	
 	// Use this for initialization
 	void Start () {
 		speed = 4f;
 		JumpForce = 50f;
 		rb = GetComponent<Rigidbody2D>();
+		audio = GetComponent<AudioSource>();
 	}
 	
 	void FixedUpdate(){
@@ -44,6 +48,7 @@ public class Player : MonoBehaviour {
 		
 		if(Input.GetButtonDown("Fire1")){
 			//attack
+			audio.PlayOneShot(AttackSound, 0.7F);
 			Instantiate(spearPrefab, new Vector3(spearPosition.transform.position.x,spearPosition.transform.position.y,0), Quaternion.identity);
 		}
 		
@@ -60,6 +65,7 @@ public class Player : MonoBehaviour {
 		
 		if(col.gameObject.tag == "spear"){
 			print("hit");
+			audio.PlayOneShot(hitSound, 0.7F);
 			rb.AddForce(Vector2.left * 1000f);
 		}
 		
